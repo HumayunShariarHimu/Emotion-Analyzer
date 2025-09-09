@@ -1,0 +1,305 @@
+<!doctype html>
+
+<html lang="bn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Emotion Analyzer</title>
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--muted:#94a3b8;--accent:#6ee7b7}
+    body{font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial;background:linear-gradient(180deg,#081127 0%,#0b1020 100%);color:#e6eef8;margin:0;padding:20px}
+    .container{max-width:980px;margin:24px auto;padding:20px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:14px;box-shadow:0 6px 30px rgba(2,6,23,0.6)}
+    h1{margin:0 0 6px;font-size:22px}
+    p.lead{color:var(--muted);margin-top:0}
+    .grid{display:grid;grid-template-columns:1fr 360px;gap:18px}
+    .card{background:var(--card);padding:14px;border-radius:10px}
+    label{display:block;margin:10px 0 6px;color:var(--muted);font-size:13px}
+    select,input[type=text],textarea{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
+    textarea{min-height:100px}
+    .btn{display:inline-block;padding:8px 12px;border-radius:8px;border:none;background:linear-gradient(90deg,#22c1c3,#2bd6a3);color:#032;cursor:pointer;font-weight:700}
+    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
+    .result{margin-top:12px;padding:12px;border-radius:8px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01))}
+    .chip{display:inline-block;padding:6px 8px;border-radius:999px;background:rgba(255,255,255,0.03);color:var(--muted);font-size:13px;margin-right:6px}
+    pre{white-space:pre-wrap;background:#07121a;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.02);font-size:13px}
+    .minor{font-size:13px;color:var(--muted)}
+    footer{margin-top:18px;color:var(--muted);font-size:13px}
+    @media(max-width:880px){.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+	<center>
+  <div class="container">
+    <h1>Emotion Analyzer</h1>
+    <p class="lead">Human Behaviour Analysis System</p><div class="grid">
+  <div>
+    <div class="card">
+      <label> (Emotion Category)</label>
+      <select id="episode">
+        <option value="anger"> :  (Anger)</option>
+        <option value="fear"> :  (Fear)</option>
+        <option value="sadness"> :  (Sadness)</option>
+        <option value="joy"> :    (Peace & Joy)</option>
+      </select>
+
+      <label>  (Subtype)</label>
+      <select id="subtype"></select>
+
+      <label>  (Observed Behaviour)</label>
+      <select id="behavior">
+        <option value="auto">--    --</option>
+        <option value="saying_mean">  </option>
+        <option value="yelling">/ </option>
+        <option value="fight">/  </option>
+        <option value="not_listening">  </option>
+        <option value="ignoring"> </option>
+        <option value="unkind_feedback">  </option>
+        <option value="showing_off"> / </option>
+        <option value="defensive"> </option>
+        <option value="isolating"> </option>
+        <option value="fidgeting">/</option>
+        <option value="shutting_down">  </option>
+        <option value="boasting">  </option>
+        <option value="sharing">  </option>
+        <option value="admiring"> </option>
+      </select>
+
+      <label> /  (Optional notes)</label>
+      <input id="note" type="text" placeholder=" ,    ">
+
+      <label> (Severity)</label>
+      <input id="severity" type="range" min="1" max="10" value="4">
+      <div style="display:flex;justify-content:space-between"><small class="minor"></small><small class="minor"></small></div>
+
+      <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn" id="analyzeBtn"> </button>
+        <button class="btn-ghost" id="resetBtn"></button>
+        <button class="btn-ghost" id="exportBtn">JSON </button>
+        <button class="btn-ghost" id="copyBtn"></button>
+      </div>
+
+    </div>
+
+    <div class="card" style="margin-top:12px">
+      <h3 style="margin:0 0 6px">  / </h3>
+      <textarea id="context" placeholder="   , ,  ,  "></textarea>
+      <p class="minor">          </p>
+    </div>
+  </div>
+
+  <div>
+    <div class="card">
+      <h3 style="margin:0 0 6px"> </h3>
+      <div id="summary" class="result">
+        <p class="minor">       /   " " </p>
+      </div>
+
+      <div style="margin-top:12px">
+        <h4 style="margin:0 0 8px"></h4>
+        <div id="details" class="result">
+          <p class="minor">  </p>
+        </div>
+      </div>
+
+      <div style="margin-top:12px">
+        <h4 style="margin:0 0 8px">  (Coping & Next Steps)</h4>
+        <div id="advice" class="result"><p class="minor">  </p></div>
+      </div>
+
+    </div>
+
+    <div class="card" style="margin-top:12px">
+      <h4 style="margin:0 0 6px"> / JSON</h4>
+      <pre id="jsonout">{}</pre>
+    </div>
+  </div>
+</div>
+
+<footer>Humayun Shahriar Himu</footer>
+
+  </div>  <script>
+    // Data mapping from user-provided content
+    const DATA = {
+      anger: {
+        label: ' (Anger)',
+        hormone: ['Adrenaline','Noradrenaline','Cortisol'],
+        subtypes: {
+          hateful: {bn:' (Hateful)', behaviour:'  ', reason:'  / ',coping:[' ','    ','     ']},
+          mad: {bn:' (Mad)', behaviour:'/ ', reason:'    ',coping:['  ','       ']},
+          aggressive: {bn:' (Aggressive)', behaviour:'/', reason:'    ',coping:['     ','   ']},
+          irritated: {bn:' (Irritated)', behaviour:'  ', reason:'   ',coping:[' ','  ']},
+          distant: {bn:'/ (Distant)', behaviour:' ', reason:'   ',coping:['    ','    ']},
+          critical: {bn:' (Critical)', behaviour:'  ', reason:'   ',coping:['    ','   ']},
+          offended: {bn:' (Offended)', behaviour:' / ', reason:'   ',coping:['  ','    ']},
+          embarrassed: {bn:' (Embarrassed)', behaviour:' ', reason:'  ',coping:['   ','   ']}
+        }
+      },
+      fear: {
+        label: ' (Fear)',
+        hormone: ['Adrenaline','Noradrenaline','Cortisol'],
+        subtypes: {
+          unwanted:{bn:' (Unwanted)',behaviour:'  ',reason:'  ',coping:['   ',' ']},
+          inferior:{bn:' (Inferior)',behaviour:'  ',reason:'    ',coping:['  ','/  ']},
+          powerless:{bn:' (Powerless)',behaviour:'  ',reason:' ',coping:['  ','    ']},
+          anxious:{bn:' (Anxious)',behaviour:'     ',reason:' / ',coping:['','-']},
+          scared:{bn:' (Scared)',behaviour:' /',reason:'  ',coping:['  ','- ']},
+          shock:{bn:' (Shock)',behaviour:' ,  ',reason:' ',coping:[' ','     ']}
+        }
+      },
+      sadness: {
+        label: ' (Sadness)',
+        hormone: ['Serotonin','Dopamine'],
+        subtypes: {
+          shame:{bn:' (Shame)',behaviour:' /',reason:' ',coping:['  ','    ']},
+          apathetic:{bn:' (Apathetic)',behaviour:' /',reason:' ',coping:['  ','  ']},
+          despair:{bn:'   (Despair)',behaviour:'  ',reason:' ',coping:[' ','- ']},
+          depressed:{bn:' (Depressed)',behaviour:'  ',reason:' ',coping:['-  ',' ']},
+          lonely:{bn:' (Lonely)',behaviour:' ',reason:'',coping:['   ',' ']},
+          guilty:{bn:' (Guilt)',behaviour:' / ',reason:'  ',coping:['  ','  ']}
+        }
+      },
+      joy: {
+        label: '   (Peace & Joy)',
+        hormone: ['Dopamine','Serotonin','Oxytocin','Endorphins'],
+        subtypes: {
+          proud:{bn:' (Proud)',behaviour:'   ',reason:'/',coping:[' ',' ']},
+          satisfied:{bn:' (Satisfied)',behaviour:'  ',reason:'',coping:['   ',' ']},
+          peaceful:{bn:' (Peaceful)',behaviour:' ',reason:' ',coping:['',' ']},
+          courageous:{bn:' (Courageous)',behaviour:'/ ',reason:'  ',coping:[' ','']},
+          optimistic:{bn:' (Optimistic)',behaviour:'  ',reason:' ',coping:['-',' ']},
+          intimate:{bn:' (Intimate)',behaviour:'  ',reason:'  ',coping:['  ','  ']},
+          still:{bn:' (Still)',behaviour:' ',reason:' ',coping:[' ',' ']}
+        }
+      }
+    };
+
+    // Populate subtype options based on category
+    const episodeEl = document.getElementById('episode');
+    const subtypeEl = document.getElementById('subtype');
+    const behaviorEl = document.getElementById('behavior');
+    const severityEl = document.getElementById('severity');
+    const noteEl = document.getElementById('note');
+    const contextEl = document.getElementById('context');
+    const summaryEl = document.getElementById('summary');
+    const detailsEl = document.getElementById('details');
+    const adviceEl = document.getElementById('advice');
+    const jsonOut = document.getElementById('jsonout');
+
+    function fillSubtypes(){
+      const cat = episodeEl.value;
+      subtypeEl.innerHTML = '';
+      const subs = DATA[cat].subtypes;
+      for(const key of Object.keys(subs)){
+        const opt = document.createElement('option'); opt.value = key; opt.textContent = subs[key].bn;
+        subtypeEl.appendChild(opt);
+      }
+    }
+    episodeEl.addEventListener('change',fillSubtypes);
+    fillSubtypes();
+
+    // Analysis logic
+    function analyze(){
+      const cat = episodeEl.value;
+      const subtype = subtypeEl.value;
+      const severity = Number(severityEl.value);
+      const manualBehavior = behaviorEl.value === 'auto' ? null : behaviorEl.value;
+      const note = noteEl.value.trim();
+      const context = contextEl.value.trim();
+
+      const meta = DATA[cat];
+      const sdata = meta.subtypes[subtype];
+
+      // Compose analysis
+      const inferredBehavior = manualBehavior || sdata.behaviour || 'Observed behaviour not provided';
+      const hormones = meta.hormone.join(', ');
+      const probableReason = sdata.reason;
+      const coping = sdata.coping;
+
+      // risk scoring: rough heuristic
+      let riskScore = Math.round((severity/10) * (manualBehavior?1.0:0.9) * 100)/10; // 0-10 scaled to percent-ish
+      if(cat === 'anger' && (subtype==='aggressive' || subtype==='critical')) riskScore += 10;
+      if(cat === 'sadness' && (subtype==='despair' || subtype==='depressed')) riskScore += 12;
+      if(riskScore>100) riskScore = 100;
+
+      const summaryHTML = `
+        <strong>:</strong> ${meta.label} <br>
+        <strong>:</strong> ${sdata.bn} <br>
+        <strong> :</strong> ${inferredBehavior} <br>
+        <strong> :</strong> ${severity} / 10<br>
+        <strong> ():</strong> ${riskScore}%
+      `;
+
+      const detailsHTML = `
+        <p><strong> (Probable Reason):</strong> ${probableReason}</p>
+        <p><strong>  / :</strong> ${hormones}</p>
+        <p><strong> / :</strong> ${context || '  '}</p>
+        <p><strong> :</strong> ${note || '  '}</p>
+      `;
+
+      const adviceHTML = `
+        <p><strong> :</strong></p>
+        <ul>
+          ${coping.map(c=>`<li>${c}</li>`).join('')}
+        </ul>
+        <p class="minor">   (8)   > 40%        </p>
+      `;
+
+      const report = {
+        timestamp: new Date().toISOString(),
+        category: meta.label,
+        subtype: sdata.bn,
+        inferredBehavior,
+        severity,
+        riskPercent: riskScore,
+        probableReason,
+        hormones: meta.hormone,
+        coping,
+        note,context
+      };
+
+      summaryEl.innerHTML = summaryHTML;
+      detailsEl.innerHTML = detailsHTML;
+      adviceEl.innerHTML = adviceHTML;
+      jsonOut.textContent = JSON.stringify(report,null,2);
+
+      // minor highlights
+      if(riskScore>60){
+        summaryEl.style.borderLeft = '4px solid #ff6b6b';
+      } else if(riskScore>30){
+        summaryEl.style.borderLeft = '4px solid #f59e0b';
+      } else {
+        summaryEl.style.borderLeft = '4px solid #10b981';
+      }
+
+      lastReport = report;
+    }
+
+    // Buttons
+    document.getElementById('analyzeBtn').addEventListener('click',()=>analyze());
+    document.getElementById('resetBtn').addEventListener('click',()=>{document.getElementById('context').value='';document.getElementById('note').value='';document.getElementById('severity').value=4;document.getElementById('behavior').value='auto';fillSubtypes();summaryEl.innerHTML='<p class="minor">       /   " " </p>';detailsEl.innerHTML='<p class="minor">  </p>';adviceEl.innerHTML='<p class="minor">  </p>';jsonOut.textContent='{}';});
+
+    let lastReport = null;
+
+    document.getElementById('copyBtn').addEventListener('click',()=>{
+      try{
+        navigator.clipboard.writeText(jsonOut.textContent);
+        alert('JSON    ');
+      }catch(e){alert(' :   ');}
+    });
+
+    document.getElementById('exportBtn').addEventListener('click',()=>{
+      if(!lastReport) { analyze(); }
+      const dataStr = jsonOut.textContent;
+      const blob = new Blob([dataStr],{type:'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = 'emotion_report_'+(new Date().toISOString())+'.json'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    });
+
+    // Auto-analyze when subtype changed for quicker feedback
+    subtypeEl.addEventListener('change',()=>{analyze();});
+
+    // initial analyze
+    analyze();
+  </script>
+</center>
+</body>
+</html>
