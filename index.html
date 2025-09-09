@@ -33,82 +33,82 @@
     <p class="lead">Human Behaviour Analysis System</p><div class="grid">
   <div>
     <div class="card">
-      <label> (Emotion Category)</label>
+      <label>পর্ব (Emotion Category)</label>
       <select id="episode">
-        <option value="anger"> :  (Anger)</option>
-        <option value="fear"> :  (Fear)</option>
-        <option value="sadness"> :  (Sadness)</option>
-        <option value="joy"> :    (Peace & Joy)</option>
+        <option value="anger">পর্ব ১: রাগ (Anger)</option>
+        <option value="fear">পর্ব ২: ভয় (Fear)</option>
+        <option value="sadness">পর্ব ৩: দুঃখ (Sadness)</option>
+        <option value="joy">পর্ব ৪: শান্তি ও আনন্দ (Peace & Joy)</option>
       </select>
 
-      <label>  (Subtype)</label>
+      <label>অনুভূতির ধরন (Subtype)</label>
       <select id="subtype"></select>
 
-      <label>  (Observed Behaviour)</label>
+      <label>প্রতিক্রিয়ার এক্সপ্রেশন (Observed Behaviour)</label>
       <select id="behavior">
-        <option value="auto">--    --</option>
-        <option value="saying_mean">  </option>
-        <option value="yelling">/ </option>
-        <option value="fight">/  </option>
-        <option value="not_listening">  </option>
-        <option value="ignoring"> </option>
-        <option value="unkind_feedback">  </option>
-        <option value="showing_off"> / </option>
-        <option value="defensive"> </option>
-        <option value="isolating"> </option>
-        <option value="fidgeting">/</option>
-        <option value="shutting_down">  </option>
-        <option value="boasting">  </option>
-        <option value="sharing">  </option>
-        <option value="admiring"> </option>
+        <option value="auto">-- স্বয়ংক্রিয়ভাবে পূরণ করুন --</option>
+        <option value="saying_mean">খারাপ কথা বলা</option>
+        <option value="yelling">চিৎকার/স্থান ত্যাগ</option>
+        <option value="fight">ঝগড়া/সংঘাত শুরু করা</option>
+        <option value="not_listening">কথা না শোনা</option>
+        <option value="ignoring">উপেক্ষা করা</option>
+        <option value="unkind_feedback">রূঢ়ভাবে মতামত দেওয়া</option>
+        <option value="showing_off">জাহির করা/লোক দেখানো</option>
+        <option value="defensive">আত্মরক্ষামূলক হওয়া</option>
+        <option value="isolating">বিচ্ছিন্ন হওয়া</option>
+        <option value="fidgeting">আস্থাহীন/অস্থিরতা</option>
+        <option value="shutting_down">নিজেকে গুটিয়ে নেওয়া</option>
+        <option value="boasting">নিজের অর্জন বলা</option>
+        <option value="sharing">নিজেকে প্রকাশ করা</option>
+        <option value="admiring">প্রশংসা করা</option>
       </select>
 
-      <label> /  (Optional notes)</label>
-      <input id="note" type="text" placeholder=" ,    ">
+      <label>তারিখ / সময় (Optional notes)</label>
+      <input id="note" type="text" placeholder="সংক্ষিপ্ত লক্ষণ, সময় বা কনটেক্সট লিখুন">
 
-      <label> (Severity)</label>
+      <label>তীব্রতা (Severity)</label>
       <input id="severity" type="range" min="1" max="10" value="4">
-      <div style="display:flex;justify-content:space-between"><small class="minor"></small><small class="minor"></small></div>
+      <div style="display:flex;justify-content:space-between"><small class="minor">হালকা</small><small class="minor">তীব্র</small></div>
 
       <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
-        <button class="btn" id="analyzeBtn"> </button>
-        <button class="btn-ghost" id="resetBtn"></button>
-        <button class="btn-ghost" id="exportBtn">JSON </button>
-        <button class="btn-ghost" id="copyBtn"></button>
+        <button class="btn" id="analyzeBtn">বিশ্লেষণ কর</button>
+        <button class="btn-ghost" id="resetBtn">রিসেট</button>
+        <button class="btn-ghost" id="exportBtn">JSON ডাউনলোড</button>
+        <button class="btn-ghost" id="copyBtn">কপি</button>
       </div>
 
     </div>
 
     <div class="card" style="margin-top:12px">
-      <h3 style="margin:0 0 6px">  / </h3>
-      <textarea id="context" placeholder="   , ,  ,  "></textarea>
-      <p class="minor">          </p>
+      <h3 style="margin:0 0 6px">কাস্টম নোট / কনটেক্সট</h3>
+      <textarea id="context" placeholder="অতিরিক্ত কনটেক্সট — সম্পর্ক, ঘটনা, শারীরিক অবস্থা, চিকিৎসা ইত্যাদি"></textarea>
+      <p class="minor">আপনি চাইলে এই ফিল্ডটিতে আরো তথ্য লিখে বিশ্লেষণের গভীরতা বাড়াতে পারেন।</p>
     </div>
   </div>
 
   <div>
     <div class="card">
-      <h3 style="margin:0 0 6px"> </h3>
+      <h3 style="margin:0 0 6px">বিশ্লেষণ ফলাফল</h3>
       <div id="summary" class="result">
-        <p class="minor">       /   " " </p>
+        <p class="minor">এখানে বিশ্লেষণের সারমর্ম দেখাবে — প্রথমে একটি অনুভূতি/সাবটাইপ নির্বাচন করে "বিশ্লেষণ কর" দিন।</p>
       </div>
 
       <div style="margin-top:12px">
-        <h4 style="margin:0 0 8px"></h4>
+        <h4 style="margin:0 0 8px">বিস্তারিত</h4>
         <div id="details" class="result">
-          <p class="minor">  </p>
+          <p class="minor">কোনো ফলাফল নেই।</p>
         </div>
       </div>
 
       <div style="margin-top:12px">
-        <h4 style="margin:0 0 8px">  (Coping & Next Steps)</h4>
-        <div id="advice" class="result"><p class="minor">  </p></div>
+        <h4 style="margin:0 0 8px">কএর সুপারিশ (Coping & Next Steps)</h4>
+        <div id="advice" class="result"><p class="minor">কোনো ফলাফল নেই।</p></div>
       </div>
 
     </div>
 
     <div class="card" style="margin-top:12px">
-      <h4 style="margin:0 0 6px"> / JSON</h4>
+      <h4 style="margin:0 0 6px">রিপোর্ট / JSON</h4>
       <pre id="jsonout">{}</pre>
     </div>
   </div>
@@ -120,54 +120,54 @@
     // Data mapping from user-provided content
     const DATA = {
       anger: {
-        label: ' (Anger)',
+        label: 'রাগ (Anger)',
         hormone: ['Adrenaline','Noradrenaline','Cortisol'],
         subtypes: {
-          hateful: {bn:' (Hateful)', behaviour:'  ', reason:'  / ',coping:[' ','    ','     ']},
-          mad: {bn:' (Mad)', behaviour:'/ ', reason:'    ',coping:['  ','       ']},
-          aggressive: {bn:' (Aggressive)', behaviour:'/', reason:'    ',coping:['     ','   ']},
-          irritated: {bn:' (Irritated)', behaviour:'  ', reason:'   ',coping:[' ','  ']},
-          distant: {bn:'/ (Distant)', behaviour:' ', reason:'   ',coping:['    ','    ']},
-          critical: {bn:' (Critical)', behaviour:'  ', reason:'   ',coping:['    ','   ']},
-          offended: {bn:' (Offended)', behaviour:' / ', reason:'   ',coping:['  ','    ']},
-          embarrassed: {bn:' (Embarrassed)', behaviour:' ', reason:'  ',coping:['   ','   ']}
+          hateful: {bn:'বিদ্বেষপূর্ণ (Hateful)', behaviour:'খারাপ কথা বলা', reason:'গভীর তীব্র অপমান/অবিচার অনুভূতি',coping:['গভীর শ্বাস','বিচ্ছিন্ন হওয়ার আগে বিরতি নিন','কথা বলার পূর্বে ২০ সেকেন্ড গোনা']},
+          mad: {bn:'ক্ষুব্ধ (Mad)', behaviour:'চিৎকার/স্থান ত্যাগ', reason:'অপ্রত্যাশিত বাধা বা সীমা লঙ্ঘন',coping:['শান্ত হওয়া চেষ্টা','ঠিক কথা বলার রিঅ‍্যারে যাতে অভিব্যক্তি ম্যানেজ হয়']},
+          aggressive: {bn:'আক্রমণাত্মক (Aggressive)', behaviour:'ঝগড়া/সংঘাত', reason:'নিজের সীমা রক্ষার অতিরিক্ত প্রয়াস',coping:['যদি বিপজ্জনক হলে নিরাপত্তা নিশ্চিত করুন','পেশাদার সহায়তা বিবেচনা করুন']},
+          irritated: {bn:'বিরক্ত (Irritated)', behaviour:'কথা না শোনা', reason:'নিরবচ্ছিন্ন ছোট ছোট ডিস্টার্বেন্স',coping:['ব্রেক নিন','মনোযোগ রিডাইরেক্ট করুন']},
+          distant: {bn:'অন্যমনস্ক/দূরবর্তী (Distant)', behaviour:'উপেক্ষা করা', reason:'সুরক্ষার জন্য ব্যক্তিগত দূরত্ব',coping:['আলাপের সময় সীমা শেয়ার করুন','আবেগ প্রকাশের সুশ্রী পদ্ধতি শিখুন']},
+          critical: {bn:'সমালোচক (Critical)', behaviour:'রূঢ়ভাবে মতামত দেওয়া', reason:'অসন্তোষের কারণে অহংকারী প্রতিক্রিয়া',coping:['কৈশোরে মনের মাধুর্য রেকগনাইজ করুন','প্রশংসা থেকে শুরু করুন']},
+          offended: {bn:'অপমানিত (Offended)', behaviour:'জাহির করা/লোক দেখানো', reason:'আত্মসম্মান রক্ষা করার প্রয়াস',coping:['নরম কথা বলুন','আত্মসম্মানের ঘাটতি নিয়ে ব্যাকআপ পরিকল্পনা']},
+          embarrassed: {bn:'অস্বস্তিকর (Embarrassed)', behaviour:'আত্মরক্ষামূলক হওয়া', reason:'লজ্জা বাঁচাতে আত্মরক্ষা',coping:['সফট ল্যান্ডিং বেছে নিন','ক্ষমা চাইতে প্রস্তুত থাকুন']}
         }
       },
       fear: {
-        label: ' (Fear)',
+        label: 'ভয় (Fear)',
         hormone: ['Adrenaline','Noradrenaline','Cortisol'],
         subtypes: {
-          unwanted:{bn:' (Unwanted)',behaviour:'  ',reason:'  ',coping:['   ',' ']},
-          inferior:{bn:' (Inferior)',behaviour:'  ',reason:'    ',coping:['  ','/  ']},
-          powerless:{bn:' (Powerless)',behaviour:'  ',reason:' ',coping:['  ','    ']},
-          anxious:{bn:' (Anxious)',behaviour:'     ',reason:' / ',coping:['','-']},
-          scared:{bn:' (Scared)',behaviour:' /',reason:'  ',coping:['  ','- ']},
-          shock:{bn:' (Shock)',behaviour:' ,  ',reason:' ',coping:[' ','     ']}
+          unwanted:{bn:'অবাঞ্ছিত (Unwanted)',behaviour:'মূল কারণ লুকানো',reason:'সমাজিক প্রত্যাখ্যানের ভীতি',coping:['পোক্ত সাপোর্ট নেটওয়ার্ক খুঁজুন','আত্মসম্মান বাড়ান']},
+          inferior:{bn:'হীনমন্য (Inferior)',behaviour:'নিজেকে বিচ্ছিন্ন করা',reason:'নিজের তুলনায় কম মনে করা',coping:['ছোট অর্জন গুনুন','থেরাপি/কাউন্সেলিং বিবেচনা করুন']},
+          powerless:{bn:'শক্তিহীন (Powerless)',behaviour:'মানিয়ে চলার চেষ্টা',reason:'নিরাপত্তাহীনতার অনুভব',coping:['নিজের সীমা নির্ধারণ','আস্থা তৈরি করার ছোট কাজ']},
+          anxious:{bn:'উদ্বিগ্ন (Anxious)',behaviour:'হাল ছেড়ে দেওয়া বা অতিরিক্ত প্রতিক্রিয়া',reason:'অপ্রতিরোধ্য চিন্তা/ভবিষ্যৎ অনিশ্চয়তা',coping:['মাইন্ডফুলনেস','ডে-প্ল্যানিং']},
+          scared:{bn:'ভীত (Scared)',behaviour:'অস্থির থাকা/পলানো',reason:'তৎক্ষণাৎ বিপদের আশঙ্কা',coping:['নিরাপদ স্থান নিশ্চিত','শ্বাস-প্রশ্বাস কৌশল']},
+          shock:{bn:'স্তম্ভিত (Shock)',behaviour:'প্রথমে নীরব, পরে প্রতিক্রিয়া',reason:'অপ্রত্যাশিত ঘটনা',coping:['সময় দিন','ধীরে করে অনুভব প্রক্রিয়া শুরু করুন']}
         }
       },
       sadness: {
-        label: ' (Sadness)',
-        hormone: ['Serotonin','Dopamine'],
+        label: 'দুঃখ (Sadness)',
+        hormone: ['Serotonin↓','Dopamine↓'],
         subtypes: {
-          shame:{bn:' (Shame)',behaviour:' /',reason:' ',coping:['  ','    ']},
-          apathetic:{bn:' (Apathetic)',behaviour:' /',reason:' ',coping:['  ','  ']},
-          despair:{bn:'   (Despair)',behaviour:'  ',reason:' ',coping:[' ','- ']},
-          depressed:{bn:' (Depressed)',behaviour:'  ',reason:' ',coping:['-  ',' ']},
-          lonely:{bn:' (Lonely)',behaviour:' ',reason:'',coping:['   ',' ']},
-          guilty:{bn:' (Guilt)',behaviour:' / ',reason:'  ',coping:['  ','  ']}
+          shame:{bn:'লজ্জিত (Shame)',behaviour:'এড়িয়ে যাওয়া/ত্যাগ',reason:'আন্তরিক লজ্জা',coping:['নিজেকে ক্ষমা শেখা','সুপরিচিত কারো সঙ্গে কথা বলুন']},
+          apathetic:{bn:'উদাসীন (Apathetic)',behaviour:'লুকিয়ে থাকা/দোষারোপ',reason:'মোটিভেশনের অভাব',coping:['ছোট লক্ষ্য নির্ধারণ','রুটিন সেট করুন']},
+          despair:{bn:'হাল ছেড়ে দেওয়া (Despair)',behaviour:'গুরুত্ব না দেওয়া',reason:'গভীর হতাশা',coping:['প্রফেশনাল সহায়তা','সফট-কেয়ার রুটিন']},
+          depressed:{bn:'হতাশাগ্রস্ত (Depressed)',behaviour:'নিজেকে গুটিয়ে নেওয়া',reason:'দীর্ঘস্থায়ী দুঃখ',coping:['মেডিক্যাল-অ্যাসেসমেন্ট বিবেচনা করুন','সামাজিক সাপোর্ট']},
+          lonely:{bn:'একাকী (Lonely)',behaviour:'শক্তিহীন বোধ',reason:'সম্পর্কহীনতা',coping:['সংযোগের ছোট ধাপ নিন','কমিউনিটি খুঁজুন']},
+          guilty:{bn:'দোষী (Guilt)',behaviour:'সত্য বলা/মিথ্যা বলা',reason:'অতীতের কাজের সংকোচ',coping:['মেডিয়েশন বা ক্ষমা','উপযুক্ত অ্যাকশন টেক']}
         }
       },
       joy: {
-        label: '   (Peace & Joy)',
+        label: 'শান্তি ও আনন্দ (Peace & Joy)',
         hormone: ['Dopamine','Serotonin','Oxytocin','Endorphins'],
         subtypes: {
-          proud:{bn:' (Proud)',behaviour:'   ',reason:'/',coping:[' ',' ']},
-          satisfied:{bn:' (Satisfied)',behaviour:'  ',reason:'',coping:['   ',' ']},
-          peaceful:{bn:' (Peaceful)',behaviour:' ',reason:' ',coping:['',' ']},
-          courageous:{bn:' (Courageous)',behaviour:'/ ',reason:'  ',coping:[' ','']},
-          optimistic:{bn:' (Optimistic)',behaviour:'  ',reason:' ',coping:['-',' ']},
-          intimate:{bn:' (Intimate)',behaviour:'  ',reason:'  ',coping:['  ','  ']},
-          still:{bn:' (Still)',behaviour:' ',reason:' ',coping:[' ',' ']}
+          proud:{bn:'গর্বিত (Proud)',behaviour:'প্রশ্ন করা ও শোনা',reason:'আত্মতৃপ্তি/অর্জন',coping:['সহানুভূতিশীল শেয়ারিং','সক্রিয় শ্রবণ']},
+          satisfied:{bn:'সন্তুষ্ট (Satisfied)',behaviour:'নিজের অর্জন বলা',reason:'লক্ষ্যপূর্তি',coping:['আলোচনা ভাগ করে নিন','দর্শন শেয়ার']},
+          peaceful:{bn:'শান্তিপূর্ণ (Peaceful)',behaviour:'প্রশংসা করা',reason:'মানসিক স্থিরতা',coping:['মাইন্ডফুলনেস','শেয়ারড মোমেন্ট']},
+          courageous:{bn:'সাহসী (Courageous)',behaviour:'দাঁড়ানো/সহায়তা করা',reason:'ভয় জয় করা',coping:['রিসিলিয়েন্স রিফ্লেকশন','মেন্টরিং']},
+          optimistic:{bn:'আশাবাদি (Optimistic)',behaviour:'নিজের গল্প বলা',reason:'ভবিষ্যৎ আস্থা',coping:['গোল-শেয়ারিং','ভবিষ্যত প্ল্যানিং']},
+          intimate:{bn:'ঘনিষ্ঠ (Intimate)',behaviour:'নিজেকে প্রকাশ করা',reason:'ভরসা ও সংযোগ',coping:['ভাল মানসিক যোগাযোগ','ভাল সীমা সেটিং']},
+          still:{bn:'স্থির (Still)',behaviour:'সৌন্দর্য দেখা',reason:'মানসিক স্থিরতা',coping:['প্রশংসা অনুশীলন','উদ্দেশ্য খুঁজুন']}
         }
       }
     };
@@ -221,26 +221,26 @@
       if(riskScore>100) riskScore = 100;
 
       const summaryHTML = `
-        <strong>:</strong> ${meta.label} <br>
-        <strong>:</strong> ${sdata.bn} <br>
-        <strong> :</strong> ${inferredBehavior} <br>
-        <strong> :</strong> ${severity} / 10<br>
-        <strong> ():</strong> ${riskScore}%
+        <strong>অনুভূতি:</strong> ${meta.label} <br>
+        <strong>সাবটাইপ:</strong> ${sdata.bn} <br>
+        <strong>ইনফারড বিহ্যাভিয়ার:</strong> ${inferredBehavior} <br>
+        <strong>তীব্রতা স্কোর:</strong> ${severity} / 10<br>
+        <strong>ঝুঁকি (আনুমানিক):</strong> ${riskScore}%
       `;
 
       const detailsHTML = `
-        <p><strong> (Probable Reason):</strong> ${probableReason}</p>
-        <p><strong>  / :</strong> ${hormones}</p>
-        <p><strong> / :</strong> ${context || '  '}</p>
-        <p><strong> :</strong> ${note || '  '}</p>
+        <p><strong>কারণ (Probable Reason):</strong> ${probableReason}</p>
+        <p><strong>সংশ্লিষ্ট হরমোন / নিউরোট্রান্সমিটার:</strong> ${hormones}</p>
+        <p><strong>নোট / কনটেক্সট:</strong> ${context || 'না দেওয়া হয়েছে'}</p>
+        <p><strong>অবজারভড নোট:</strong> ${note || 'না দেওয়া হয়েছে'}</p>
       `;
 
       const adviceHTML = `
-        <p><strong> :</strong></p>
+        <p><strong>প্রাথমিক কৌশলসমূহ:</strong></p>
         <ul>
           ${coping.map(c=>`<li>${c}</li>`).join('')}
         </ul>
-        <p class="minor">   (8)   > 40%        </p>
+        <p class="minor">যদি তীব্রতা বেশি (≥8) বা ঝুঁকি > 40% হয় — পেশাদার মানসিক স্বাস্থ্যের সাহায্য নেওয়া বাঞ্ছনীয়।</p>
       `;
 
       const report = {
@@ -275,15 +275,15 @@
 
     // Buttons
     document.getElementById('analyzeBtn').addEventListener('click',()=>analyze());
-    document.getElementById('resetBtn').addEventListener('click',()=>{document.getElementById('context').value='';document.getElementById('note').value='';document.getElementById('severity').value=4;document.getElementById('behavior').value='auto';fillSubtypes();summaryEl.innerHTML='<p class="minor">       /   " " </p>';detailsEl.innerHTML='<p class="minor">  </p>';adviceEl.innerHTML='<p class="minor">  </p>';jsonOut.textContent='{}';});
+    document.getElementById('resetBtn').addEventListener('click',()=>{document.getElementById('context').value='';document.getElementById('note').value='';document.getElementById('severity').value=4;document.getElementById('behavior').value='auto';fillSubtypes();summaryEl.innerHTML='<p class="minor">এখানে বিশ্লেষণের সারমর্ম দেখাবে — প্রথমে একটি অনুভূতি/সাবটাইপ নির্বাচন করে "বিশ্লেষণ কর" দিন।</p>';detailsEl.innerHTML='<p class="minor">কোনো ফলাফল নেই।</p>';adviceEl.innerHTML='<p class="minor">কোনো ফলাফল নেই।</p>';jsonOut.textContent='{}';});
 
     let lastReport = null;
 
     document.getElementById('copyBtn').addEventListener('click',()=>{
       try{
         navigator.clipboard.writeText(jsonOut.textContent);
-        alert('JSON    ');
-      }catch(e){alert(' :   ');}
+        alert('JSON রিপোর্ট কপি করা হয়েছে');
+      }catch(e){alert('কপিতে সমস্যা: ব্রাউজার অনুমতি লাগবে');}
     });
 
     document.getElementById('exportBtn').addEventListener('click',()=>{
